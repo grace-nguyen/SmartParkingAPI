@@ -1,7 +1,12 @@
+using SmartParkingApi.Interfaces;
+using System.Text.Json.Serialization;
+
+
 namespace SmartParkingApi.Models;
 
-using SmartParkingApi.Interfaces;
-
+[JsonDerivedType(typeof(Car), typeDiscriminator: "car")]
+[JsonDerivedType(typeof(Van), typeDiscriminator: "van")]
+[JsonDerivedType(typeof(Motorbike), typeDiscriminator: "motorbike")]  
 public abstract class Vehicle : IParkingVehicle
 {
   public string LicensePlate { get; set; }
