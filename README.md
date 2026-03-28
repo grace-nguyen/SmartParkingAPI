@@ -35,7 +35,7 @@ A modern, lightweight Web API built with **ASP.NET Core 8** to manage a smart pa
 
 ```bash
 # Clone the repository
-git clone <your-repository-url>
+git clone git@github.com:grace-nguyen/SmartParkingAPI.git
 
 # Navigate to the project folder
 cd SmartParkingApi
