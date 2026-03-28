@@ -49,11 +49,6 @@ public class ParkingController : ControllerBase
   [HttpPost]
   public async Task<IActionResult> AddVehicle([FromBody] VehicleDTO vehicleDto)
   {
-    if (string.IsNullOrWhiteSpace(vehicleDto.LicensePlate))
-    {
-      return BadRequest(new { message = "License plate is required" });
-    }
-
     Vehicle? newVehicle = vehicleDto.VehicleType switch
     {
       VehicleType.Car => new Car(vehicleDto.LicensePlate, DateTime.Now, vehicleDto.HourlyRate > 0 ? vehicleDto.HourlyRate : 10.0),
