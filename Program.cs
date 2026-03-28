@@ -24,6 +24,9 @@ builder.Services.Configure<RouteOptions>(options =>
 
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
+app.UseMiddleware<SmartParkingApi.Middlewares.ExceptionMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
