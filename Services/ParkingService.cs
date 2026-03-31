@@ -1,66 +1,38 @@
-using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
+using SmartParkingApi.Data;
 using SmartParkingApi.Models;
 
 namespace SmartParkingApi.Services;
 
 public class ParkingService : IParkingService
 {
-  // In-memory storage for parked vehicles
-  private readonly List<Vehicle> _vehicles = new();
-  private readonly string _filePath;
+  private readonly ApplicationDbContext _context;
 
-  public ParkingService()
+  public ParkingService(ApplicationDbContext context)
   {
-    string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-    _filePath = Path.Combine(baseDir, "Data", "parking.json");
-    LoadData();
+    _context = context;
   }
 
-  private void LoadData()
+  public async Task<List<Vehicle>> GetVehiclesAsync()
   {
-    if (File.Exists(_filePath))
-    {
-      var jsonData = File.ReadAllText(_filePath);
-      var loadVehicles = JsonSerializer.Deserialize<List<Vehicle>>(jsonData);
-      if (loadVehicles != null)
-      {
-        _vehicles.Clear();
-        _vehicles.AddRange(loadVehicles);
-      }
-    }
+    return await _context.Vehicles.ToListAsync();
   }
 
-  private void SaveData()
+  public async Task AddVehicleAsync(Vehicle vehicle)
   {
-    // Ensure the Data directory exists before saving
-    string? dataDir = Path.GetDirectoryName(_filePath);
-    if (dataDir != null)
-    {
-      Directory.CreateDirectory(dataDir);
-    }
-    var jsonData = JsonSerializer.Serialize(_vehicles, new JsonSerializerOptions { WriteIndented = true });
-    File.WriteAllText(_filePath, jsonData);
-  }
-
-
-  public Task<List<Vehicle>> GetVehiclesAsync() => Task.FromResult(_vehicles);
-
-  public Task AddVehicleAsync(Vehicle vehicle)
-  {
-    _vehicles.Add(vehicle);
-    SaveData();
-    return Task.CompletedTask;
+    _context.Vehicles.Add(vehicle);
+    await _context.SaveChangesAsync();
   }
 
   public async Task<Vehicle?> CheckoutVehicleAsync(string licensePlate)
 
   {
-    var vehicle = _vehicles.FirstOrDefault(v => v.LicensePlate.Equals(licensePlate, StringComparison.OrdinalIgnoreCase));
+    var vehicle = await _context.Vehicles.FirstOrDefaultAsync(v => v.LicensePlate.ToLower() == licensePlate.ToLower());
     if (vehicle != null)
     {
-      _vehicles.Remove(vehicle);
-      SaveData();
+      _context.Vehicles.Remove(vehicle);
+      await _context.SaveChangesAsync();
     }
-    return await Task.FromResult(vehicle);
+    return vehicle;
   }
 }

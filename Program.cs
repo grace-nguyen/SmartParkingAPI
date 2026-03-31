@@ -1,7 +1,13 @@
 using SmartParkingApi.Services;
 using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
+using SmartParkingApi.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Config DbContext
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
 builder.Services.AddControllers()
@@ -9,8 +15,8 @@ builder.Services.AddControllers()
     {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
-// Register ParkingService as a singleton
-builder.Services.AddSingleton<IParkingService, ParkingService>();
+// Register ParkingService as a AddScoped
+builder.Services.AddScoped<IParkingService, ParkingService>();
 
 builder.Services.AddEndpointsApiExplorer();
 // Add Swagger for API documentation

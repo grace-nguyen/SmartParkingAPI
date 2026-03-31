@@ -488,3 +488,8 @@ $RECYCLE.BIN/
 Data/parking.json
 bin/
 obj/
+
+# Ignore database file
+*.db
+*.db-shm
+*.db-wal
