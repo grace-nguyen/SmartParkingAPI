@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SmartParkingApi.DTOs;
 
-public class VehicleDTO
+public class VehicleDto
 {
   [Required(ErrorMessage = "License plate is required")]
   [StringLength(10, MinimumLength = 3, ErrorMessage = "License plate must be between 3 and 10 characters")]

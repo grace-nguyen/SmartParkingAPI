@@ -4,10 +4,12 @@ using SmartParkingApi.Interfaces;
 using SmartParkingApi.Models;
 using SmartParkingApi.Services;
 using SmartParkingApi.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SmartParkingApi.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class ParkingController : ControllerBase
 {
@@ -47,7 +49,7 @@ public class ParkingController : ControllerBase
 
 
   [HttpPost]
-  public async Task<IActionResult> AddVehicle([FromBody] VehicleDTO vehicleDto)
+  public async Task<IActionResult> AddVehicle([FromBody] VehicleDto vehicleDto)
   {
     Vehicle? newVehicle = vehicleDto.VehicleType switch
     {
