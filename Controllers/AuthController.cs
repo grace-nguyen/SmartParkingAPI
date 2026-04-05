@@ -7,6 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using SmartParkingApi.Constants;
 
 namespace SmartParkingApi.Controllers;
 
@@ -33,7 +34,7 @@ public class AuthController : ControllerBase
     {
       Username = request.Username,
       PasswordHash = passwordHash,
-      Role = "Staff"
+      Role = UserRoles.Staff
     };
 
     _context.Users.Add(user);

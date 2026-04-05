@@ -5,6 +5,7 @@ using SmartParkingApi.Models;
 using SmartParkingApi.Services;
 using SmartParkingApi.DTOs;
 using Microsoft.AspNetCore.Authorization;
+using SmartParkingApi.Constants;
 
 namespace SmartParkingApi.Controllers;
 
@@ -21,6 +22,7 @@ public class ParkingController : ControllerBase
   }
 
   [HttpGet()]
+  [Authorize(Roles = UserRoles.Admin + "," + UserRoles.Staff)]
   public async Task<ActionResult<List<Vehicle>>> GetParkingVehicles()
   {
     // Get the list of vehicles
@@ -33,6 +35,7 @@ public class ParkingController : ControllerBase
   }
 
   [HttpGet("{licensePlate}")]
+  [Authorize(Roles = UserRoles.Admin)]
   public async Task<ActionResult<Vehicle>> GetByPlate(string licensePlate)
   {
     // Get the vehicle by license plate
@@ -49,6 +52,7 @@ public class ParkingController : ControllerBase
 
 
   [HttpPost]
+  [Authorize(Roles = UserRoles.Admin + "," + UserRoles.Staff)]
   public async Task<IActionResult> AddVehicle([FromBody] VehicleDto vehicleDto)
   {
     Vehicle? newVehicle = vehicleDto.VehicleType switch
@@ -75,6 +79,7 @@ public class ParkingController : ControllerBase
   }
 
   [HttpDelete("{licensePlate}")]
+  [Authorize(Roles = UserRoles.Admin)]
 
   public async Task<IActionResult> CheckoutVehicle(string licensePlate)
   {
