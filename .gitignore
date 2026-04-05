@@ -485,7 +485,7 @@ $RECYCLE.BIN/
 
 
 # Ignore local data files
-Data/parking.json
+**/parking.json
 bin/
 obj/
 
