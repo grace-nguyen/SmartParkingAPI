@@ -1,24 +1,28 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.5.2.0
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartParkingApi", "SmartParkingApi.csproj", "{D51D16F5-25BF-CF8D-16AE-B6306361AA61}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartParkingApi", "SmartParkingApi\SmartParkingApi.csproj", "{E005425E-B128-43B1-A8BE-C5A629000B3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartParkingApi.Tests", "SmartParkingApi.Tests\SmartParkingApi.Tests.csproj", "{A33DEB89-1602-411C-8FAF-06A8136FF1F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D51D16F5-25BF-CF8D-16AE-B6306361AA61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D51D16F5-25BF-CF8D-16AE-B6306361AA61}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D51D16F5-25BF-CF8D-16AE-B6306361AA61}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D51D16F5-25BF-CF8D-16AE-B6306361AA61}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {18A3ED76-376B-444B-97A1-C888166820DF}
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E005425E-B128-43B1-A8BE-C5A629000B3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E005425E-B128-43B1-A8BE-C5A629000B3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E005425E-B128-43B1-A8BE-C5A629000B3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E005425E-B128-43B1-A8BE-C5A629000B3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A33DEB89-1602-411C-8FAF-06A8136FF1F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A33DEB89-1602-411C-8FAF-06A8136FF1F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A33DEB89-1602-411C-8FAF-06A8136FF1F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A33DEB89-1602-411C-8FAF-06A8136FF1F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
