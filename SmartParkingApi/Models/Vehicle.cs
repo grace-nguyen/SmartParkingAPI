@@ -19,9 +19,13 @@ public abstract class Vehicle : IParkingVehicle
     EntryTime = entryTime;
     HourlyRate = hourlyRate;
   }
-  public virtual double CalculateParkingFee()
+  public virtual double CalculateParkingFee(DateTime? currentTime = null)
   {
-    TimeSpan parkingDuration = DateTime.Now - EntryTime;
+    DateTime endTime = currentTime ?? DateTime.Now;
+    TimeSpan parkingDuration = endTime - EntryTime;
+
+    if (parkingDuration.TotalSeconds <= 0) return 0;
+
     double totalHours = Math.Ceiling(parkingDuration.TotalHours);
     return totalHours * HourlyRate;
   }

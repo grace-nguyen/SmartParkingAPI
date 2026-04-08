@@ -31,9 +31,9 @@ builder.Services.AddSwaggerGen(options =>
     options.AddSecurityDefinition("oauth2", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
     {
         Description = "Enter the token using the following syntax: bearer {your_token} ",
-        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        In =ParameterLocation.Header,
         Name = "Authorization",
-        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey
+        Type = SecuritySchemeType.ApiKey
     });
 
     options.OperationFilter<Swashbuckle.AspNetCore.Filters.SecurityRequirementsOperationFilter>();
