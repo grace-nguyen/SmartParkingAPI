@@ -36,5 +36,44 @@ public class ParkingServiceTests
         Assert.Single(result);
         Assert.Equal("34F-34625", result[0].LicensePlate);
     }
+
+    [Fact]
+    public async Task AddVehicle_DuplicateLicensePlate_ShouldThrowException()
+    {
+        //Arrange
+        var context = GetDatabaseContext();
+        var service = new ParkingService(context);
+        var v1 = new Car("20A-4535", DateTime.Now, 30);
+        var v2 = new Car("20A-4535", DateTime.Now, 20);
+
+        //Act
+        await service.AddVehicleAsync(v1);
+
+        //Assert
+        //Check if the system throws an error (Exception) when add a second vehicle with the same license plate number.
+        await Assert.ThrowsAsync<InvalidOperationException>(() => service.AddVehicleAsync(v2));
+    }
+
+    [Fact]
+    public async Task CheckoutVehicle_ExistingVehicle_ShouldReturnVehicleAndRemoveFromDb()
+    {
+        //Arrange
+        var context = GetDatabaseContext();
+        var service = new ParkingService(context);
+        var plate = "30A-3546";
+        await service.AddVehicleAsync(new Car(plate, DateTime.Now, 30));
+
+        //Act
+        var result = await service.CheckoutVehicleAsync(plate);
+
+        //Assert
+        Assert.NotNull(result);
+        Assert.Equal(plate, result.LicensePlate);
+
+        //Check the database to see if the car is missing
+        var allVehicle = await service.GetVehiclesAsync();
+        Assert.Empty(allVehicle);
+    }
+
 }
 
