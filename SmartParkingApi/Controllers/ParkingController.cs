@@ -6,6 +6,7 @@ using SmartParkingApi.Services;
 using SmartParkingApi.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using SmartParkingApi.Constants;
+using SmartParkingApi.Mappings;
 
 namespace SmartParkingApi.Controllers;
 
@@ -29,9 +30,11 @@ public class ParkingController : ControllerBase
     var list = await _parkingService.GetVehiclesAsync();
 
     // Sort the list by parking fee in descending order
-    var sortedList = list.OrderByDescending(v => v.CalculateParkingFee()).ToList();
+    var vehicles = list.OrderByDescending(v => v.CalculateParkingFee()).ToList();
 
-    return Ok(sortedList); // Return the sorted list
+    var dtos = vehicles.Select(v => v.ToDto());
+
+    return Ok(dtos); // Return the sorted list
   }
 
   [HttpGet("{licensePlate}")]
@@ -47,7 +50,7 @@ public class ParkingController : ControllerBase
       return NotFound(new { message = "Vehicle not found" });
     }
 
-    return Ok(vehicle);
+    return Ok(vehicle.ToDto());
   }
 
 

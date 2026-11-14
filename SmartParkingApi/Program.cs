@@ -60,6 +60,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     };
 });
 
+// Config CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowNextJS",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -71,6 +83,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseAuthentication();
+app.UseCors("AllowNextJS");
 app.UseAuthorization();
 // Map controller routes
 app.MapControllers();
