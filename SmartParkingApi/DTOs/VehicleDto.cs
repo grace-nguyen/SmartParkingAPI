@@ -14,7 +14,7 @@ public class VehicleDto
   public required VehicleType VehicleType { get; set; }
 
   [Range(0, 100, ErrorMessage = "Hourly rate must be a positive number")]
-  public double HourlyRate { get; set; }
+  public decimal HourlyRate { get; set; }
 }
 
 public class VehicleResponseDto
@@ -22,5 +22,5 @@ public class VehicleResponseDto
   public string LicensePlate { get; set; } = string.Empty;
   public string VehicleType { get; set; } = string.Empty;
   public DateTime EntryTime { get; set; }
-  public double HourlyRate { get; set; }
+  public decimal HourlyRate { get; set; }
 }

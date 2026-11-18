@@ -60,9 +60,24 @@ public class ParkingController : ControllerBase
   {
     Vehicle? newVehicle = vehicleDto.VehicleType switch
     {
-      VehicleType.Car => new Car(vehicleDto.LicensePlate, DateTime.Now, vehicleDto.HourlyRate > 0 ? vehicleDto.HourlyRate : 10.0),
-      VehicleType.Van => new Van(vehicleDto.LicensePlate, DateTime.Now, vehicleDto.HourlyRate > 0 ? vehicleDto.HourlyRate : 15.0),
-      VehicleType.Motorbike => new Motorbike(vehicleDto.LicensePlate, DateTime.Now, vehicleDto.HourlyRate > 0 ? vehicleDto.HourlyRate : 5.0),
+      VehicleType.Car => new Car(
+        vehicleDto.LicensePlate, 
+        DateTime.Now, 
+        ParkingRates.CarHourly
+      ),
+
+      VehicleType.Van => new Van(
+        vehicleDto.LicensePlate, 
+        DateTime.Now, 
+        ParkingRates.VanHourly
+      ),
+
+      VehicleType.Motorbike => new Motorbike(
+        vehicleDto.LicensePlate, 
+        DateTime.Now, 
+        ParkingRates.MotorbikeHourly
+      ),
+
       _ => null
     };
 
@@ -74,11 +89,14 @@ public class ParkingController : ControllerBase
     // Add the new vehicle to the parking service
     await _parkingService.AddVehicleAsync(newVehicle);
 
-    return CreatedAtAction(nameof(GetParkingVehicles), new { licensePlate = newVehicle.LicensePlate }, new
-    {
-      message = "Vehicle added successfully",
-      data = newVehicle
-    });
+    return CreatedAtAction(
+      nameof(GetParkingVehicles), 
+      new { licensePlate = newVehicle.LicensePlate }, 
+      new {
+        message = "Vehicle added successfully",
+        data = newVehicle
+      }
+    );
   }
 
   [HttpDelete("{licensePlate}")]

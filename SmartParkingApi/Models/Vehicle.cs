@@ -11,23 +11,24 @@ public abstract class Vehicle : IParkingVehicle
 {
   public string LicensePlate { get; set; }
   public DateTime EntryTime { get; set; }
-  public virtual double HourlyRate { get; set; }
+  public virtual decimal HourlyRate { get; set; }
 
-  public Vehicle(string licensePlate, DateTime entryTime, double hourlyRate)
+  public Vehicle(string licensePlate, DateTime entryTime, decimal hourlyRate)
   {
     LicensePlate = licensePlate;
     EntryTime = entryTime;
     HourlyRate = hourlyRate;
   }
-  public virtual double CalculateParkingFee(DateTime? currentTime = null)
+  public virtual decimal CalculateParkingFee(DateTime? currentTime = null)
   {
     DateTime endTime = currentTime ?? DateTime.Now;
-    TimeSpan parkingDuration = endTime - EntryTime;
+    TimeSpan duration= endTime - EntryTime;
 
-    if (parkingDuration.TotalSeconds <= 0) return 0;
+    if (duration.TotalSeconds <= 0) return 0m;
 
-    double totalHours = Math.Ceiling(parkingDuration.TotalHours);
-    return totalHours * HourlyRate;
+    decimal halfHourBlocks = (decimal)Math.Ceiling(duration.TotalMinutes / 30.0);
+    
+    return halfHourBlocks * (HourlyRate/2m);
   }
 }
 
